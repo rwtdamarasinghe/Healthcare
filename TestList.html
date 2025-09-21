@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test List - LabFlow</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #1DA1F2;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header .logo {
+            font-size: 24px;
+        }
+        .header nav a {
+            color: white;
+            margin-left: 20px;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .header nav a:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        .header nav a.active {
+            background-color: rgba(255,255,255,0.2);
+            font-weight: bold;
+        }
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #f8f9fa;
+            height: 100vh;
+            padding: 20px;
+            position: fixed;
+        }
+        .sidebar h3 {
+            margin-top: 0;
+        }
+        .sidebar .filter-section {
+            margin-top: 20px;
+        }
+        .sidebar input, .sidebar select {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .sidebar button {
+            background-color: #1DA1F2;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .sidebar button:hover {
+            background-color: #0d8bd9;
+        }
+        .sidebar button:last-child {
+            background-color: #fff;
+            color: #1DA1F2;
+            border: 1px solid #1DA1F2;
+        }
+        .sidebar button:last-child:hover {
+            background-color: #f0f8ff;
+        }
+        .main-content {
+            margin-left: 270px;
+            padding: 20px;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .table .status {
+            padding: 6px 12px;
+            border-radius: 5px;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .table .scheduled { background-color: #28a745; }
+        .table .pending { background-color: #ffc107; color: #212529; }
+        .table .canceled { background-color: #dc3545; }
+        .actions button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 3px;
+        }
+        .actions button:hover {
+            background-color: #f0f0f0;
+        }
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
+            padding: 15px;
+        }
+        .pagination a {
+            color: #1DA1F2;
+            text-decoration: none;
+            margin: 0 5px;
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .pagination a:hover {
+            background-color: #1DA1F2;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">🏥 LabFlow</div>
+        <nav>
+            <a href="TestList.html" class="active">Test List</a>
+            <a href="test-history.html">Test History</a>
+            <a href="TManagement.html">Test Management</a>
+            <a href="index.html">Notifications</a>
+        </nav>
+        <div class="user-actions">
+            <span>A</span>
+            <span>⚙️</span>
+        </div>
+    </div>
+    <div class="sidebar">
+        <h3>Test List</h3>
+        <div class="filter-section">
+            <h4>Filter Tests</h4>
+            <input type="text" placeholder="Refine your test search...">
+            <input type="text" placeholder="Patient name...">
+            <select>
+                <option value="">Test by type...</option>
+                <option value="blood">Blood Panel</option>
+                <option value="xray">X-Ray Scan</option>
+                <option value="mri">MRI Scan</option>
+                <option value="ultrasound">Ultrasound</option>
+                <option value="ecg">ECG</option>
+            </select>
+            <input type="text" placeholder="Search by test type...">
+            <input type="date" placeholder="Date Range...">
+            <select>
+                <option value="all">All</option>
+                <option value="scheduled">Scheduled</option>
+                <option value="pending">Pending</option>
+                <option value="canceled">Canceled</option>
+            </select>
+            <button>Apply Filters</button>
+            <button>Clear Filters</button>
+            <button>+ Schedule New Test</button>
+        </div>
+    </div>
+    <div class="main-content">
+        <h2>Upcoming Tests</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Patient Name</th>
+                    <th>Test Type</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Alice Johnson</td>
+                    <td>Blood Panel</td>
+                    <td>Oct 26, 2024</td>
+                    <td><span class="status scheduled">Scheduled</span></td>
+                    <td class="actions"><button title="More options">⋮</button></td>
+                </tr>
+                <tr>
+                    <td>Robert Smith</td>
+                    <td>X-Ray Scan</td>
+                    <td>Oct 26, 2024</td>
+                    <td><span class="status pending">Pending</span></td>
+                    <td class="actions"><button title="More options">⋮</button></td>
+                </tr>
+                <tr>
+                    <td>Emily White</td>
+                    <td>MRI Scan</td>
+                    <td>Oct 27, 2024</td>
+                    <td><span class="status scheduled">Scheduled</span></td>
+                    <td class="actions"><button title="More options">⋮</button></td>
+                </tr>
+                <tr>
+                    <td>Michael Brown</td>
+                    <td>Ultrasound</td>
+                    <td>Oct 27, 2024</td>
+                    <td><span class="status canceled">Canceled</span></td>
+                    <td class="actions"><button title="More options">⋮</button></td>
+                </tr>
+                <tr>
+                    <td>Sophia Lee</td>
+                    <td>ECG</td>
+                    <td>Oct 28, 2024</td>
+                    <td><span class="status scheduled">Scheduled</span></td>
+                    <td class="actions"><button title="More options">⋮</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="pagination">
+            <a href="#">&laquo; Previous</a>
+            <span>1</span>
+            <a href="#">Next &raquo;</a>
+        </div>
+    </div>
+</body>
+</html>

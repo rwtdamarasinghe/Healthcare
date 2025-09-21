@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications - LabFlow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .app-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            background-color: #1DA1F2;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 0;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            margin-left: 20px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .nav-link.active {
+            background-color: rgba(255,255,255,0.2);
+            font-weight: 600;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .user-profile:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .user-icon {
+            font-size: 20px;
+        }
+
+        .settings-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .settings-btn:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            min-height: calc(100vh - 70px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: #f8f9fa;
+            border-right: 1px solid #e9ecef;
+            padding: 20px 0;
+        }
+
+        .sidebar-nav {
+            padding: 0 20px;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #495057;
+            text-decoration: none;
+            padding: 12px 0;
+            border-bottom: 1px solid #e9ecef;
+            transition: all 0.3s;
+        }
+
+        .sidebar-link:last-child {
+            border-bottom: none;
+        }
+
+        .sidebar-link:hover {
+            color: #1DA1F2;
+            background-color: #e9ecef;
+            padding-left: 8px;
+        }
+
+        .sidebar-link.active {
+            color: #1DA1F2;
+            font-weight: 600;
+            background-color: #d1ecf1;
+            padding-left: 8px;
+            border-right: 3px solid #1DA1F2;
+        }
+
+        .sidebar-icon {
+            font-size: 18px;
+            width: 20px;
+        }
+
+        .notification-badge {
+            background-color: #dc3545;
+            color: white;
+            border-radius: 50%;
+            width: 8px;
+            height: 8px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: auto;
+        }
+
+        /* Notifications Section */
+        .notifications-section {
+            flex: 1;
+            padding: 20px;
+            max-width: 800px;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #212529;
+            margin-bottom: 8px;
+        }
+
+        .notifications-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 0;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .tab-button {
+            background: none;
+            border: none;
+            padding: 12px 20px;
+            color: #6c757d;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab-button:hover {
+            color: #1DA1F2;
+        }
+
+        .tab-button.active {
+            color: #1DA1F2;
+            border-bottom-color: #1DA1F2;
+        }
+
+        .tab-count {
+            background-color: #1DA1F2;
+            color: white;
+            border-radius: 10px;
+            padding: 2px 6px;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+
+        .mark-all-read-btn {
+            background-color: #1DA1F2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .mark-all-read-btn:hover {
+            background-color: #0d8bd9;
+        }
+
+        /* Notifications List */
+        .notifications-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .notification-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: all 0.3s;
+            border-left: 4px solid #e9ecef;
+        }
+
+        .notification-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transform: translateY(-1px);
+        }
+
+        .notification-card.unread {
+            border-left-color: #1DA1F2;
+            background-color: #f0f8ff;
+        }
+
+        .notification-card.urgent {
+            border-left-color: #dc3545;
+            background-color: #fff5f5;
+        }
+
+        .notification-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 20px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .notification-card.unread .notification-icon {
+            background-color: #1DA1F2;
+            color: white;
+        }
+
+        .notification-card.urgent .notification-icon {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .notification-meta {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .notification-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #212529;
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+
+        .notification-date {
+            font-size: 14px;
+            color: #6c757d;
+        }
+
+        .notification-actions {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .mark-read-btn, .mark-unread-btn, .view-btn, .dismiss-btn {
+            background: none;
+            border: 1px solid #dee2e6;
+            color: #6c757d;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        .mark-read-btn:hover, .mark-unread-btn:hover, .view-btn:hover {
+            background-color: #1DA1F2;
+            color: white;
+            border-color: #1DA1F2;
+        }
+
+        .dismiss-btn {
+            background-color: #f8f9fa;
+            border-color: #dee2e6;
+        }
+
+        .dismiss-btn:hover {
+            background-color: #dc3545;
+            color: white;
+            border-color: #dc3545;
+        }
+
+        .notification-content {
+            padding: 0 20px 20px;
+        }
+
+        .notification-content p {
+            color: #495057;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        .notification-card.read .notification-title {
+            color: #6c757d;
+        }
+
+        .notification-card.read .notification-content p {
+            color: #adb5bd;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 10px;
+                padding: 10px;
+            }
+
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .main-content {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .notifications-section {
+                max-width: none;
+                padding: 15px;
+            }
+        }

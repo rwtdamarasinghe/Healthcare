@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Management - LabFlow</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #1DA1F2;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header .logo {
+            font-size: 24px;
+        }
+        .header nav a {
+            color: white;
+            margin-left: 20px;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .header nav a:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        .header nav a.active {
+            background-color: rgba(255,255,255,0.2);
+            font-weight: bold;
+        }
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #f8f9fa;
+            height: 100vh;
+            padding: 20px;
+            position: fixed;
+        }
+        .sidebar h3 {
+            margin-top: 0;
+        }
+        .sidebar a {
+            color: #1DA1F2;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            padding: 8px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .sidebar a:hover {
+            background-color: #e9ecef;
+        }
+        .sidebar a.active {
+            font-weight: bold;
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+        .sidebar .notifications {
+            color: #dc3545;
+            margin-left: 5px;
+        }
+        .main-content {
+            margin-left: 270px;
+            padding: 20px;
+        }
+        .main-content h2 {
+            margin-top: 0;
+        }
+        .add-test-btn {
+            background-color: #1DA1F2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .add-test-btn:hover {
+            background-color: #0d8bd9;
+        }
+        .filter-section {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        .filter-section select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .table .status {
+            padding: 6px 12px;
+            border-radius: 5px;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .table .active { background-color: #28a745; }
+        .table .inactive { background-color: #ffc107; color: #212529; }
+        .table .actions button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-left: 5px;
+            padding: 5px;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+        }
+        .table .actions button:hover {
+            background-color: #f0f0f0;
+        }
+        .pagination {
+            margin-top: 20px;
+            text-align: right;
+            padding: 15px;
+            font-size: 14px;
+        }
+        .pagination a {
+            color: #1DA1F2;
+            text-decoration: none;
+            margin: 0 5px;
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .pagination a:hover {
+            background-color: #1DA1F2;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">🏥 LabFlow</div>
+        <nav>
+            <a href="TestList.html">Test List</a>
+            <a href="test-history.html">Test History</a>
+            <a href="TManagement.html" class="active">Test Management</a>
+            <a href="index.html">Notifications</a>
+        </nav>
+        <div class="user-actions">
+            <span>A</span>
+            <span>⚙️</span>
+        </div>
+    </div>
+    <div class="sidebar">
+        <h3>Test Management</h3>
+        <a href="#" class="active">Add New Test</a>
+        <a href="#">Test History Management <span class="notifications">🔴</span></a>
+        <a href="#">Notifications <span class="notifications">🔴</span></a>
+    </div>
+    <div class="main-content">
+        <h2>Test Management</h2>
+        <button class="add-test-btn">+ Add New Test</button>
+        <div class="filter-section">
+            <select>
+                <option value="all">All Statuses</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+            </select>
+            <div>Showing <strong>6</strong> of <strong>12</strong> tests</div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Test Name</th>
+                    <th>Category</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>LT001</td>
+                    <td>Complete Blood Count</td>
+                    <td>Hematology</td>
+                    <td><span class="status active">Active</span></td>
+                    <td class="actions">
+                        <button title="Edit">✏️</button>
+                        <button title="More options">⋮</button>
+                        <button title="Delete" style="color: #dc3545;">🗑️</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>LT002</td>
+                    <td>Urinalysis</td>
+                    <td>Microbiology</td>
+                    <td><span class="status active">Active</span></td>
+                    <td class="actions">
+                        <button title="Edit">✏️</button>
+                        <button title="More options">⋮</button>
+                        <button title="Delete" style="color: #dc3545;">🗑️</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>LT003</td>
+                    <td>Fasting Blood Sugar</td>
+                    <td>Clinical Chemistry</td>
+                    <td><span class="status active">Active</span></td>
+                    <td class="actions">
+                        <button title="Edit">✏️</button>
+                        <button title="More options">⋮</button>
+                        <button title="Delete" style="color: #dc3545;">🗑️</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>LT004</td>
+                    <td>Thyroid Function Test</td>
+                    <td>Endocrinology</td>
+                    <td><span class="status inactive">Inactive</span></td>
+                    <td class="actions">
+                        <button title="Edit">✏️</button>
+                        <button title="More options">⋮</button>
+                        <button title="Delete" style="color: #dc3545;">🗑️</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>LT005</td>
+                    <td>Lipid Panel</td>
+                    <td>Clinical Chemistry</td>
+                    <td><span class="status active">Active</span></td>
+                    <td class="actions">
+                        <button title="Edit">✏️</button>
+                        <button title="More options">⋮</button>
+                        <button title="Delete" style="color: #dc3545;">🗑️</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>LT006</td>
+                    <td>Prostate-Specific Antigen (PSA)</td>
+                    <td>Oncology</td>
+                    <td><span class="status active">Active</span></td>
+                    <td class="actions">
+                        <button title="Edit">✏️</button>
+                        <button title="More options">⋮</button>
+                        <button title="Delete" style="color: #dc3545;">🗑️</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="pagination">
+            Showing 1-6 of 12 items 
+            <a href="#">&laquo; Previous</a>
+            <a href="#">Next &raquo;</a>
+        </div>
+    </div>
+</body>
+</html>
